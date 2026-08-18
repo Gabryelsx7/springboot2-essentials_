@@ -1,3 +1,7 @@
-spring:
+  spring:
   application:
-    name: springboot2-essentials 
+    name: springboot2-essentials
+
+    server:
+      error:
+        include-stacktrace: on_param
