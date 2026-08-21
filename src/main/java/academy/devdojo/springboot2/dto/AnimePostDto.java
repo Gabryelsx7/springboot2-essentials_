@@ -3,6 +3,6 @@ package academy.devdojo.springboot2.dto;
 import lombok.Data;
 
 @Data
-public class AnimeDto {
+public class AnimePostDto {
     private String name;
 }

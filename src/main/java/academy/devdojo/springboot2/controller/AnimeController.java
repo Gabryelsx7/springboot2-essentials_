@@ -1,7 +1,7 @@
 package academy.devdojo.springboot2.controller;
 
 import academy.devdojo.springboot2.domain.Anime;
-import academy.devdojo.springboot2.dto.AnimeDto;
+import academy.devdojo.springboot2.dto.AnimePostDto;
 import academy.devdojo.springboot2.dto.AnimePutDto;
 import academy.devdojo.springboot2.services.AnimeService;
 import academy.devdojo.springboot2.util.Dateutil;
@@ -17,40 +17,39 @@ import java.util.List;
 @RestController
 @RequestMapping("animes")
 @Log4j2
-
 @RequiredArgsConstructor
 public class AnimeController {
 
     private final Dateutil dateutil;
     private final AnimeService animeService;
 
-
-    // s@RequestMapping(method = RequestMethod.GET, path = "list") localhost:8080/anime/list
     @GetMapping
     public ResponseEntity<List<Anime>> listAll() {
         log.info(dateutil.formatLocalDateTimeToDataBaseStryle(LocalDateTime.now()));
-        return new ResponseEntity<>(animeService.listAll() , HttpStatus.OK);
+        return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id) {
-        return  ResponseEntity.ok(animeService.findByIdOrThorwBadRequestExcepetion(id));
+        return ResponseEntity.ok(
+                animeService.findByIdOrThorwBadRequestExcepetion(id)
+        );
     }
 
     @PostMapping
-    @ResponseStatus( HttpStatus.CREATED)
-    public ResponseEntity<Anime> save(@RequestBody AnimeDto animeDto){
-        return ResponseEntity.ok(animeService.save(animeDto));
+    public ResponseEntity<Anime> save(@RequestBody AnimePostDto animePostDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(animeService.save(animePostDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@RequestBody long id){
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody AnimePutDto animePutDto){
+    public ResponseEntity<Void> replace(@RequestBody AnimePutDto animePutDto) {
         animeService.replace(animePutDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
