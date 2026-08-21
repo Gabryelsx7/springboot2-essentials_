@@ -53,4 +53,9 @@ public class AnimeController {
         animeService.replace(animePutDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(animeService.findByName(name));
+    }
+
 }
