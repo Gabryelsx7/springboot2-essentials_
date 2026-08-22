@@ -5,6 +5,8 @@ import academy.devdojo.springboot2.dto.AnimePostDto;
 import academy.devdojo.springboot2.dto.AnimePutDto;
 import academy.devdojo.springboot2.services.AnimeService;
 import academy.devdojo.springboot2.util.Dateutil;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -35,9 +37,9 @@ public class AnimeController {
                 animeService.findByIdOrThorwBadRequestExcepetion(id)
         );
     }
-
+    @Transactional
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody AnimePostDto animePostDto) {
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostDto animePostDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(animeService.save(animePostDto));
     }
