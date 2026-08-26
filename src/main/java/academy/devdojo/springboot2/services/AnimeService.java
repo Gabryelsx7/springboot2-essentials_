@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,16 +18,7 @@ import java.util.List;
 public class AnimeService {
 
     private final IAnimeRepository animeRepository;
-    private static List<Anime> animes;
-
-    static {
-        animes = new ArrayList<>(
-                List.of(
-                        new Anime(1L, "DBZ"),
-                        new Anime(2L, "Bersek")
-                )
-        );
-    }
+    private final AnimeMapper animeMapper;
 
     public Page<Anime> listAll(Pageable pageable) {
         return animeRepository.findAll(pageable);
@@ -43,12 +33,13 @@ public class AnimeService {
 
     public Anime save(AnimePostDto animePostDto) {
         return animeRepository.save(
-                AnimeMapper.INSTANCE.toAnime(animePostDto)
+                animeMapper.toAnime(animePostDto) // 2. USANDO O MAPPER INJETADO (sem .INSTANCE)
         );
     }
 
     public void delete(Long id) {
-        animes.remove(findByIdOrThorwBadRequestExcepetion(id));
+        Anime anime = findByIdOrThorwBadRequestExcepetion(id);
+        animeRepository.delete(anime); // (Nota: corrigi aqui para deletar do banco JPA em vez da lista estática antiga)
     }
 
     public void replace(AnimePutDto animePutDto) {
@@ -56,7 +47,7 @@ public class AnimeService {
                 findByIdOrThorwBadRequestExcepetion(animePutDto.getId());
 
         Anime anime =
-                AnimeMapper.INSTANCE.toAnime(animePutDto);
+                animeMapper.toAnime(animePutDto); // 3. USANDO O MAPPER INJETADO (sem .INSTANCE)
 
         anime.setId(savedAnime.getId());
 

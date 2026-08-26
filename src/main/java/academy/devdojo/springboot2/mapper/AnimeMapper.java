@@ -4,14 +4,15 @@ import academy.devdojo.springboot2.domain.Anime;
 import academy.devdojo.springboot2.dto.AnimePostDto;
 import academy.devdojo.springboot2.dto.AnimePutDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public abstract class AnimeMapper {
+public interface AnimeMapper {
 
-    public static final AnimeMapper INSTANCE = Mappers.getMapper(AnimeMapper.class);
-    public abstract Anime toAnime(AnimePostDto animePostDto);
-    public abstract Anime toAnime(AnimePutDto animePutDto);
+    // Converte o DTO de criar para a entidade Anime
+    Anime toAnime(AnimePostDto animePostDto);
 
-
+    // Converte o DTO de atualizar para a entidade Anime
+    Anime toAnime(AnimePutDto animePutDto);
 }
+
+
