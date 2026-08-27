@@ -10,8 +10,13 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
 
 server:
   error:
     include-stacktrace: on_param
+
+logging:
+  Level:
+    org:
+      hibernate:
+        SQL: DEBUG
