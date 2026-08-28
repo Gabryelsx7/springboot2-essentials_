@@ -24,6 +24,11 @@ public class AnimeService {
         return animeRepository.findAll(pageable);
     }
 
+
+    public List<Anime> listAllNonPageable() {
+        return animeRepository.findAll();
+    }
+
     public Anime findByIdOrThorwBadRequestExcepetion(Long id) {
         return animeRepository.findById(id)
                 .orElseThrow(() ->
