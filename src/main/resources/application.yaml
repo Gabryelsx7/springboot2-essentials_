@@ -16,7 +16,10 @@ server:
     include-stacktrace: on_param
 
 logging:
-  Level:
+  level:
     org:
       hibernate:
         SQL: DEBUG
+        orm:
+          jdbc:
+            bind: TRACE
