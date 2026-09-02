@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class AnimePostDto {
 
-    @NotEmpty
+    @NotEmpty(message = "The anime name cannot be empty")
     private String name;
 }
