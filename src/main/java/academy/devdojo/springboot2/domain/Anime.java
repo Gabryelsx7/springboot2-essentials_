@@ -22,4 +22,10 @@ public class Anime {
     private String name;
 
 
+    public void ges() {
+        
+    }
+
+    public void gets() {
+    }
 }
