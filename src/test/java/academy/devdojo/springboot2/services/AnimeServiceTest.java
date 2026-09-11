@@ -155,7 +155,8 @@ class AnimeServiceTest {
     @Test
     @DisplayName("Delete returns anime when successful")
     void delete_RemovesAnimes_WhenSuccessful(){
-        BDDMockito.doNothing().when(animeRepositoryMocke).delete(ArgumentMatchers.any(Anime.class));
+        BDDMockito.when(animeRepositoryMocke.findById(ArgumentMatchers.anyLong()))
+                .thenReturn(Optional.of(AnimeCreator.createValidAnime()));
 
         Assertions.assertThatCode(()-> animeService.delete(1L))
                 .doesNotThrowAnyException();
